@@ -1,5 +1,9 @@
 <?php
 
+
+/***
+ * Display recipes
+ */
 function display_recipe(array $recipe) : string
 {
     $recipe_content = '';
@@ -43,15 +47,17 @@ function get_recipes(array $recipes, int $limit) : array
 
     return $valid_recipes;
 }
+
+
+/***
+ * Get comments
+ */
 function get_comments(array $comments) : array
 {
     $comments = [];
 
     foreach($comments as $comment) {
-
             $comments[] = $comment;
     }
-    
-
     return $comments;
 }

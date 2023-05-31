@@ -1,31 +1,41 @@
-<?php session_start(); // $_SESSION ?>
+<?php 
+/**
+ * Connexion à la base de données
+ */
+require_once("conn_db/conn.php");
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Site de Recettes - Page d'accueil</title>
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/index.css">
-</head>
-<body class="d-flex flex-column min-vh-100">
-    <div class="container">
-    <?php include_once('header.php'); ?>
-    <!-- Formulaire de connexion -->
-    <?php include_once('login.php'); ?>
-    <!-- Fin du Formulaire de connexion -->
-    <h1>Site de Recettes !</h1>
-    <!-- Plus facile à lire -->
-    <?php foreach(get_recipes($recipes, $limit) as $recipe) : ?>
-        <article>
-            <h3><a href="detail_recette.php?id=<?= $recipe['recipe_id'] ?>"><?php echo $recipe['title'];?></a></h3>  
-            <div><?php echo $recipe['recipe']; ?></div>
-            <i><?php echo  $recipe['author']; ?></i>
-        </article>
-    <?php endforeach ?>
-    </div>
-    <?php include_once('footer.php'); ?>
-</body>
-</html>
+/***
+ * Titre de la page
+ */
+$titlePage="Recettes";
+
+/**
+ * Insertion du header
+ */
+require_once('inc/header.php');
+
+/***
+ * Recuoperations des données
+ */
+
+// Requette SQL de recuperation de la liste des requettes
+$sql = 'SELECT * FROM recipes NATURAL JOIN users';
+// Execution de la requettes
+$recipesStatement = $db->query($sql);
+
+// recuperation des elements de la requettes
+$recipes = $recipesStatement->fetchAll(PDO::FETCH_ASSOC);
+?>
+<h3 class="mt-3"> <?= count($recipes) ?> Recettes</h3>
+<hr>
+<!-- Parcours et affichage des recettes -->
+<?php foreach ($recipes as $recipe) : ?>
+    <article class="mb-3">
+        <h3 class="fw-bolder"><a target="_blank" class="text-dark text-decoration-none" href="recipe.php?id=<?= $recipe['recipe_id'] ?>"><?php echo $recipe['title']; ?></a></h3>
+        <div><?php echo $recipe['description']; ?></div>
+        <i><?php echo  $recipe['username']; ?></i>
+    </article>
+<?php endforeach ?>
+</div>
+<?php
+require_once("inc/footer.php");

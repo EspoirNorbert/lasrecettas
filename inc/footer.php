@@ -4,3 +4,5 @@
     <a class="text-dark" href="https://megasoft-international.com/">Megasoft International Gabon</a>
   </div>
 </footer>
+</body>
+</html>
