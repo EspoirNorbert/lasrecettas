@@ -30,7 +30,7 @@ $recipes = $recipesStatement->fetchAll(PDO::FETCH_ASSOC);
 <!-- Parcours et affichage des recettes -->
 <?php foreach ($recipes as $recipe) : ?>
     <article class="mb-3">
-        <h3 class="fw-bolder"><a target="_blank" class="text-dark text-decoration-none" href="recipe.php?id=<?= $recipe['recipe_id'] ?>"><?php echo $recipe['title']; ?></a></h3>
+        <h3 class="fw-bolder"><a class="text-dark text-decoration-none" href="recipe.php?id=<?= $recipe['recipe_id'] ?>"><?php echo $recipe['title']; ?></a></h3>
         <div><?php echo $recipe['description']; ?></div>
         <i><?php echo  $recipe['username']; ?></i>
     </article>

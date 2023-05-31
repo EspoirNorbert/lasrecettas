@@ -33,14 +33,17 @@ $recipes = $recipesStatement->fetchAll(PDO::FETCH_ASSOC);
 <h3 class="mt-3 fw-bolder"> <?= count($recipes) ?> Recettes</h3>
 <hr>
 <!-- Parcours et affichage des recettes -->
-<?php foreach ($recipes as $recipe) : ?>
+<?php foreach ($recipes as $recipe) : extract($recipe) ?>
     <article class="mb-3 bg-light rounded p-3 border border-dark">
     <h3 class="fw-bolder"><a target="_blank" class="text-dark text-decoration-none" href="recipe.php?id=<?= $recipe['recipe_id'] ?>"><?php echo $recipe['title']; ?></a></h3>
         <div><?php echo $recipe['description']; ?></div>
         <div class="d-flex mt-3">
             <a href="#" class="btn btn-success me-2">Publier</a>
-            <a href="#" class="btn btn-info me-2">Modifier</a>
-            <a href="#" class="btn btn-danger">Supprimer</a>
+            <a href="recipe_edit.php?id=<?= $recipe_id ?>" class="btn btn-info me-2">Modifier</a>
+            <a 
+            onclick="return confirm('Voulez vous vraiment supprimer cette recette ?')"
+            
+            href="recipe_delete.php?id=<?= $recipe_id ?>"  class="btn btn-danger">Supprimer</a>
         </div>
     </article>
 <?php endforeach ?>

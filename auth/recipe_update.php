@@ -1,51 +1,33 @@
-<?php session_start();
-include_once('config/mysql.php');
-include_once('config/user.php');
-include_once('variables.php');
+<?php
+session_start();
 
-$getData = $_GET;
+require_once("../conn_db/conn.php");
+require_once("../inc/functions.php");
 
-$retrieveRecipeStatement = $mysqlClient->prepare('SELECT * FROM recipes WHERE recipe_id = :id');
-$retrieveRecipeStatement->execute([
-    'id' => $getData['id'],
+$postData = $_POST;
+
+if (
+    !isset($postData['id']) || !isset($postData['title']) || !isset($postData['recipe']))
+{
+	$errorMessage = 'Il faut un titre et une recette pour soumettre le formulaire.';
+    $_SESSION['flash']['danger'] = $errorMessage;
+    header("Location: recipe_form.php");
+    return;
+}	
+
+$id = $postData['id'];
+$title = $postData['title'];
+$recipe = $postData['recipe'];
+$isEnabled = isset($postData['isEnabled']) ? 0 : 1;
+
+$insertRecipe = $db->prepare('UPDATE recipes SET title = :title, description = :recipe , is_enabled= :is_enabled WHERE recipe_id = :id');
+$insertRecipe->execute([
+    'title' => $title,
+    'recipe' => $recipe,
+    'is_enabled' => $isEnabled,
+    'id' => $id,
 ]);
 
-$recipe = $retrieveRecipeStatement->fetch(PDO::FETCH_ASSOC);
-?>
-
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Site de Recettes - Modification de recette</title>
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-</head>
-
-<body class="d-flex flex-column min-vh-100">
-    <div class="container">
-
-        <?php include_once('header.php'); ?>
-        <h1>Modifier une recette</h1>
-        <form action="post_create.php" method="POST">
-            <div class="mb-3">
-                <label for="title" class="form-label">Titre de la recette</label>
-                <input type="text" class="form-control" id="title" name="title" aria-describedby="title-help">
-                <div id="title-help" class="form-text">Choisissez un titre percutant !</div>
-            </div>
-            <div class="mb-3">
-                <label for="recipe" class="form-label">Description de la recette</label>
-                <textarea class="form-control" placeholder="Seulement du contenu vous appartenant ou libre de droits."
-                    id="recipe" name="recipe"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Envoyer</button>
-        </form>
-        <br />
-    </div>
-
-    <?php include_once('footer.php'); ?>
-</body>
-
-</html>
+$_SESSION["flash"]['success'] =  "La recette numero <strong>$id</strong> a été mise à jour avec success !";
+// redirect
+header("location: recipe.php?id=$id");

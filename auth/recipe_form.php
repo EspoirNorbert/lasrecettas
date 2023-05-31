@@ -2,11 +2,6 @@
 $titlePage = "Creation d'une recette";
 require_once('../inc/header.php');
 
-if (isset($_POST["btnSendMessage"])) {
-    $_SESSION['flash']['success'] = "Votre message a été bien envoyée";
-    header("Location: contact.php");
-}
-
 ?>
 <h3 class="mt-3 fw-bolder">Ajouter une nouvelle recette</h3>
 <hr>

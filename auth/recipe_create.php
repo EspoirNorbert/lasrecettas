@@ -28,6 +28,6 @@ $insertRecipe->execute([
     'author' => $author,  
 ]);
 
-$_SESSION["flash"]['success'] =  "Une recette a été crée avec success";
+$_SESSION["flash"]['success'] =  "La recette a été crée avec success !";
 // redirect
 header("location: recipes.php");
