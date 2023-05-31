@@ -26,7 +26,7 @@ $recipesStatement = $db->query($sql);
 // recuperation des elements de la requettes
 $recipes = $recipesStatement->fetchAll(PDO::FETCH_ASSOC);
 ?>
-<h3 class="mt-3"> <?= count($recipes) ?> Recettes</h3>
+<h3 class="mt-3 fw-bolder"> <?= count($recipes) ?> Recettes</h3>
 <hr>
 <!-- Parcours et affichage des recettes -->
 <?php foreach ($recipes as $recipe) : ?>

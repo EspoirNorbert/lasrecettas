@@ -24,7 +24,8 @@ if (isset($_POST['email']) &&  isset($_POST['password'])) {
 ?>
 
 <?php if (!isset($_SESSION['LOGGED_USER'])) : ?>
-<h1>Se connecter</h1>
+<h3 class="mt-3 fw-bolder">Se connecter</h3>
+<hr>
 <form action="" method="post">
     <?php if (isset($errorMessage)) : ?>
         <div class="alert alert-danger" role="alert">
@@ -40,7 +41,7 @@ if (isset($_POST['email']) &&  isset($_POST['password'])) {
         <label for="password" class="form-label">Mot de passe</label>
         <input type="password" class="form-control" id="password" name="password">
     </div>
-    <button type="submit" class="btn btn-primary">Envoyer</button>
+    <button type="submit" class="btn btn-dark">Envoyer</button>
 </form>
 <!-- Affichage du bloc de succès -->
 <?php else : ?>
