@@ -39,7 +39,7 @@ extract($recipe);
 $titlePage = $title;
 require_once('inc/header.php');
 ?>
-<h1><?= $title ?></h1>
+<h3 class="mt-3 fw-bolder"><?= $title ?></h3>
 <hr>
 <p>Auteur <strong><?= $username ?></strong></p>
 <!-- Recette  -->

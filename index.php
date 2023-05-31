@@ -19,7 +19,7 @@ require_once('inc/header.php');
  */
 
 // Requette SQL de recuperation de la liste des requettes
-$sql = 'SELECT * FROM recipes NATURAL JOIN users WHERE is_enabled=TRUE';
+$sql = 'SELECT * FROM recipes NATURAL JOIN users WHERE is_enabled=TRUE ORDER BY recipe_id DESC';
 // Execution de la requettes
 $recipesStatement = $db->query($sql);
 // recuperation des elements de la requettes
