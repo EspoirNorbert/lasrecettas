@@ -1,4 +1,6 @@
-<?php session_start(); ?>
+<?php session_start();
+require_once('functions.php')
+?>
 <!DOCTYPE html>
 <html>
 
@@ -14,4 +16,5 @@
 <body class="d-flex flex-column min-vh-100">
 <?php include_once('nav.php'); ?>
   <div class="container">
+    <?php display_flash_message(); ?>
    
