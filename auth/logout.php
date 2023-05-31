@@ -24,5 +24,5 @@ session_destroy();
 
 //echo "Votre session a été fermée.";
 //include_once('home.php');
-header('Location: home.php'); //redirection vers la page home.php
+header('Location: ../login.php'); //redirection vers la page home.php
 ?>

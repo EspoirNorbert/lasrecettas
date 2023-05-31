@@ -3,7 +3,6 @@ require_once('functions.php')
 ?>
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,7 +13,12 @@ require_once('functions.php')
   <link rel="stylesheet" href="../css/index.css">
 </head>
 <body class="d-flex flex-column min-vh-100">
-<?php include_once('nav.php'); ?>
-  <div class="container">
+  <?php
+  if (isset($_SESSION['LOGGED_USER'])) {
+    include_once('nav_admin.php');
+  } else {
+    include_once('nav.php');
+  }
+  ?>
+  <div class="container mb-5">
     <?php display_flash_message(); ?>
-   
