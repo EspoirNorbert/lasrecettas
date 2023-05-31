@@ -20,6 +20,10 @@
           <a class="nav-link" href="/auth/logout.php">Se deconnecter</a>
         </li>
       </ul>
+     <div class="navbar-nav ml-auto">
+        <img width="30" src="../assets/images/user.png" class="me-3" alt="">
+        <span><?= getLoggedUserInfo("username") ?></span>
+     </div>
     </div>
   </div>
 </nav>

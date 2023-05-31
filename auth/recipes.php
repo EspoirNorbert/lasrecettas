@@ -34,7 +34,7 @@ $recipes = $recipesStatement->fetchAll(PDO::FETCH_ASSOC);
 <hr>
 <!-- Parcours et affichage des recettes -->
 <?php foreach ($recipes as $recipe) : ?>
-    <article class="mb-3">
+    <article class="mb-3 bg-light rounded p-3 border border-dark">
     <h3 class="fw-bolder"><a target="_blank" class="text-dark text-decoration-none" href="recipe.php?id=<?= $recipe['recipe_id'] ?>"><?php echo $recipe['title']; ?></a></h3>
         <div><?php echo $recipe['description']; ?></div>
         <div class="d-flex mt-3">
@@ -43,7 +43,6 @@ $recipes = $recipesStatement->fetchAll(PDO::FETCH_ASSOC);
             <a href="#" class="btn btn-danger">Supprimer</a>
         </div>
     </article>
-    <hr>
 <?php endforeach ?>
 </div>
 <?php

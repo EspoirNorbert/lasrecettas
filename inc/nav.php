@@ -27,9 +27,9 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="logout.php">Se deconnecter</a>
-       
         <?php endif; ?>
       </ul>
+     
     </div>
   </div>
 </nav>
