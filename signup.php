@@ -1,29 +1,50 @@
 <?php
 $titlePage = "Se connecter";
 require_once('inc/header.php');
-// Soumission du formulaire
-if (isset($_POST['email']) &&  isset($_POST['password'])) {
-    foreach ($users as $user) {
-        // Utilisateur/trice trouvée !
-        if (
-            $user['email'] === $_POST['email'] &&
-            $user['password'] === $_POST['password']
-        ) {
 
-            // Enregistrement de l'email de l'utilisateur en session
-            $_SESSION['LOGGED_USER'] = $user['email'];
+if (isset($_POST['btnSignup'])) {
+
+    if ((isset($_POST['username']) && !empty($_POST["username"])) &&
+        (isset($_POST['username']) && !empty($_POST["username"])) && 
+        (isset($_POST['password']) && !empty($_POST["password"])) && 
+        (isset($_POST['confirm_password']) && !empty($_POST["confirm_password"]))
+    ) {
+
+        if ($_POST["password"] != $_POST["confirm_password"]){
+            $errorMessage = "Les mots de passe ne correspondent pas !";
         } else {
-            $errorMessage = sprintf(
-                'Les informations envoyées ne permettent pas de vous identifier : (%s%s)',
-                $_POST['email'],
-                $_POST['password']
-            );
+            require_once("./conn_db/conn.php");
+            $sql = "SELECT count(*) as total FROM users where email=:email";
+            $userStatement = $db->prepare($sql);
+            $userStatement->execute([
+                'email' => $_POST['email'],
+            ]);
+            $user = $userStatement->fetch(PDO::FETCH_ASSOC);
+            $resultTotal = $user['total'];
+
+            if ($resultTotal == 0){
+                // insert donnes
+                extract($_POST);
+                $insertUser = $db->prepare('INSERT INTO users(username, age, email,password) VALUES (:username, :age,:email,:password)');
+                $insertUser->execute([
+                    'username' => $username,
+                    'age' => $age,
+                    'email' => $email,
+                    'password' => $password
+                ]);
+                $_SESSION["flash"]['success'] =  "Votre compte a été crée avec success ! Vous pouvez vous connecter !";
+                // redirect
+                header("location: login.php");
+            } else {
+                $errorMessage = "L'adresse mail " . $_POST['email'] . " est deja utilisée.";
+            }
         }
+    } else {
+        $errorMessage = "Veuillez remplir tous les champs !";
     }
 }
-?>
 
-<?php if (!isset($_SESSION['LOGGED_USER'])) : ?>
+?>
     <h3 class="mt-3 fw-bolder">Creation de compte</h3>
     <hr>
     <form action="" method="post">
@@ -54,19 +75,12 @@ if (isset($_POST['email']) &&  isset($_POST['password'])) {
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="password" class="form-label">Confirmation du mot de passe</label>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="***********">
+                    <input type="password" class="form-control" id="password" name="confirm_password" placeholder="***********">
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-dark">Creer le compte</button>
+        <button type="submit" name="btnSignup" class="btn btn-dark">Creer le compte</button>
     </form>
-    <!-- Affichage du bloc de succès -->
-<?php else : ?>
-    <div class="alert alert-success" role="alert">
-        <!-- Souhaiter la bienvenue -->
-        Bonjour et bienvenue sur le site <?php echo $_SESSION['LOGGED_USER']; ?>
-    </div>
-<?php endif; ?>
 </div>
 <?php
 require_once("inc/footer.php");

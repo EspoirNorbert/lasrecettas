@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="index.php">Lasrecettas</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -13,14 +13,6 @@
         <li class="nav-item">
           <a class="nav-link" href="contact.php">Contactez Nous</a>
         </li>
-        <?php if (!isset($_SESSION['LOGGED_USER'])) : ?>
-        <li class="nav-item">
-          <a class="nav-link" href="login.php">Se connecter</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="signup.php">S'inscrire</a>
-        </li>
-        <?php endif; ?>
         <?php if (isset($_SESSION['LOGGED_USER'])) : ?>
         <li class="nav-item">
           <a class="nav-link" href="create.php">Creer une recettes</a>
@@ -29,6 +21,17 @@
           <a class="nav-link" href="logout.php">Se deconnecter</a>
         <?php endif; ?>
       </ul>
+    
+      <div class="navbar-nav ml-auto">
+      <?php if (!isset($_SESSION['LOGGED_USER'])) : ?>
+        <li class="nav-item">
+          <a class="nav-link" href="signup.php">Creer un compte</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="login.php">Se connecter</a>
+        </li>
+        <?php endif; ?>
+     </div>
      
     </div>
   </div>

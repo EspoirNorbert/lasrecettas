@@ -94,7 +94,6 @@ $comments = $CommentStatement->fetchAll(PDO::FETCH_ASSOC);
                                     <p class="card-text"><?= $content ?></p>
                                     <p class="card-text"><small class="text-body-secondary">Posté le <?= $date ?></small></p>
                                 </div>
-
                             </div>
                         </div>
                         <?php if (isset($_SESSION['LOGGED_USER']) && $comment['user_id'] == getLoggedUserInfo('userId')) : ?>
@@ -134,7 +133,8 @@ $comments = $CommentStatement->fetchAll(PDO::FETCH_ASSOC);
                     <div class="mb-3">
                         <?php for ($i = 0; $i <= 5; $i++) { ?>
                             <div class="form-check form-check-inline">
-                                <input type="radio" class="form-check-input" <?php if ((isset($_SESSION['LOGGED_USER']) && !empty($rate)) && $rate['rating'] == $i) echo "checked"; ?> id="radio<?= $i ?>" name="rate" value="<?= $i ?>">
+                                <input type="radio" class="form-check-input" 
+                                <?php if ((isset($_SESSION['LOGGED_USER']) && !empty($rate)) && $rate['rating'] == $i) echo "checked"; ?> id="radio<?= $i ?>" name="rate" value="<?= $i ?>">
                                 <label class="form-check-label" for="radio1"><?= $i ?></label>
                             </div>
                         <?php } ?>
@@ -143,7 +143,6 @@ $comments = $CommentStatement->fetchAll(PDO::FETCH_ASSOC);
                         <div class="alert alert-info"><small>Connecter vous pour noter</small></div>
                     <?php else : ?>
                         <button type="submit" class="btn btn-dark">Noter</button>
-
                     <?php endif; ?>
                 </form>
             </div>

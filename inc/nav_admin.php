@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="/auth">Lasrecettas</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -22,7 +22,7 @@
       </ul>
      <div class="navbar-nav ml-auto">
         <img width="30" src="../assets/images/user.png" class="me-3" alt="">
-        <span><?= getLoggedUserInfo("username") ?> <strong>#<?= getLoggedUserInfo("userId") ?></strong></span>
+        <span class="text-white"><?= getLoggedUserInfo("username") ?> <strong>#<?= getLoggedUserInfo("userId") ?></strong></span>
      </div>
     </div>
   </div>
