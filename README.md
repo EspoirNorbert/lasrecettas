@@ -41,6 +41,18 @@ Dans le fichier de configuration de l'application, vous pouvez définir les para
 
 - **Options d'administration :** Configurez des options spécifiques aux administrateurs du site, telles que les rôles d'administration, les autorisations d'accès, etc.
 
+
+## Captures
+![Tous les recettes](assets/images/listAllRecipes.png)
+
+![Details sur une recette](assets/images/receipeDetails.png)
+
+![Creer un compte](assets/images/createAccount.png)
+
+![Se connecter](assets/images/login.png)
+
+![Interface de management des recettes](assets/images/managementReciepe.png)
+
 ## Contribuer
 
 Toute contribution à cette application de recettes est la bienvenue ! Si vous souhaitez apporter des améliorations, des corrections de bugs ou des nouvelles fonctionnalités, veuillez soumettre une demande de pull avec vos modifications.
