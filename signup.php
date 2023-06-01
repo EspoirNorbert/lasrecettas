@@ -14,7 +14,7 @@ if (isset($_POST['btnSignup'])) {
         if ($_POST["password"] != $_POST["confirm_password"]){
             $errorMessage = "Les mots de passe ne correspondent pas !";
         } else {
-            require_once("./conn_db/conn.php");
+            require_once("./config/database.php");
             $sql = "SELECT count(*) as total FROM users where email=:email";
             $userStatement = $db->prepare($sql);
             $userStatement->execute([

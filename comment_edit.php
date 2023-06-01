@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require_once("conn_db/conn.php");
+require_once("config/database.php");
 $titlePage = "Modification d'un commentaire";
 require_once('inc/header.php');
 

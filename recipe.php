@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once("conn_db/conn.php");
+require_once("config/database.php");
 
 $recipe_id = $_GET["id"];
 

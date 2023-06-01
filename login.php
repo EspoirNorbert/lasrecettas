@@ -10,7 +10,7 @@ if (isset($_POST['btnLogin'])) {
         (isset($_POST['password']) && !empty($_POST["password"]))
     ) {
 
-        require_once("./conn_db/conn.php");
+        require_once("./config/database.php");
         $sql = "SELECT * FROM users where email=:email AND password=:password";
         $userStatement = $db->prepare($sql);
         $userStatement->execute([

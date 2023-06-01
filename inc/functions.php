@@ -19,6 +19,13 @@ function block_access(){
     }
 }
 
+function authMiddleware(){
+    if (isset($_SESSION['LOGGED_USER'])){
+        http_response_code(403);
+        header("Location: auth");
+    }
+}
+
 function getLoggedUserInfo($info){
     if (isset($_SESSION['LOGGED_USER'])){
         return $_SESSION['LOGGED_USER'][$info];

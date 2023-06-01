@@ -3,7 +3,7 @@ session_start();
 require_once("../inc/functions.php");
 block_access();
 
-require_once("../conn_db/conn.php");
+require_once("../config/database.php");
 $titlePage = "Creation d'une recette";
 require_once('../inc/header.php');
 

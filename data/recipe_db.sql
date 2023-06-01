@@ -33,15 +33,15 @@ CREATE TABLE `comments` (
   `date` datetime NOT NULL,
   `recipe_id` int NOT NULL,
   `user_id` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `comments`
 --
 
 INSERT INTO `comments` (`comment_id`, `content`, `date`, `recipe_id`, `user_id`) VALUES
-(1, 'C\'est une recette bien util , j\'aime beaucoup. Continuez comme çaaaaaaa', '2023-05-31 16:16:40', 1, 2),
-(2, 'C\'est super bien expliquée et bien realisable.', '2023-05-31 16:16:40', 1, 4),
+(1, "C\'est une recette bien util , j\'aime beaucoup. Continuez comme çaaaaaaa", '2023-05-31 16:16:40', 1, 2),
+(2, "C\'est super bien expliquée et bien realisable.', '2023-05-31 16:16:40", 1, 4),
 (6, 'Ceci est un commentaire voila', '2023-06-01 01:26:59', 3, 1),
 (8, 'Cool Cette recette miam miam', '2023-06-01 02:05:41', 7, 1),
 (9, 'Cool Merci !!', '2023-06-01 03:36:43', 1, 3),
@@ -59,7 +59,7 @@ CREATE TABLE `ratings` (
   `rating` int NOT NULL,
   `recipe_id` int NOT NULL,
   `user_id` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `ratings`
@@ -89,7 +89,7 @@ CREATE TABLE `recipes` (
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `is_enabled` tinyint(1) NOT NULL DEFAULT '0',
   `user_id` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `recipes`
@@ -116,7 +116,7 @@ CREATE TABLE `users` (
   `age` int NOT NULL,
   `email` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `password` varchar(512) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `users`

@@ -3,7 +3,7 @@ session_start();
 /**
  * Connexion à la base de données
  */
-require_once("conn_db/conn.php");
+require_once("config/database.php");
 
 /***
  * Titre de la page
