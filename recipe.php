@@ -41,11 +41,11 @@ require_once('inc/header.php');
 ?>
 <h3 class="mt-3 fw-bolder"><?= $title ?></h3>
 <hr>
-<p>Auteur <strong><?= $username ?></strong></p>
+<p>Auteur <strong><?= ($recipe['user_id'] == getLoggedUserInfo('userId')) ? "Vous" : $username  ?></strong></p>
 <!-- Recette  -->
 <p><?= $description ?></p>
 <?php
-$sqlQueryComment = 'SELECT * FROM comments NATURAL JOIN users WHERE recipe_id = :recipe_id';
+$sqlQueryComment = 'SELECT * FROM comments NATURAL JOIN users WHERE recipe_id = :recipe_id ORDER BY date DESC';
 $CommentStatement = $db->prepare($sqlQueryComment);
 $CommentStatement->execute([
     'recipe_id' => $recipe_id
@@ -57,20 +57,22 @@ $comments = $CommentStatement->fetchAll(PDO::FETCH_ASSOC);
     <div class="col-md-9">
         <h3 class="fw-bolder"><?= count($comments) ?> Commentaire<?= count($comments) > 1 ? "s" : "" ?></h3>
         <hr>
+        <?php if (($recipe['user_id'] != getLoggedUserInfo('userId'))): ?>
         <div id="postCommentForm" class="mb-3">
-            <form action="post_comment.php" method="POST">
-                <input type="hidden" value="<?= $recipes['recipe_id'] ?>" name="recipe_id">
-                <input type="hidden" value="<?= $recipes['user_id'] ?>" name="user_id">
+            <form action="comment_create.php" method="POST">
+                <input type="hidden" value="<?= $recipe_id ?>" name="recipe_id">
                 <div class="mt-3 mb-3">
                     <textarea class="form-control" id="comment" placeholder="Laisser un commentaire" name="comment"></textarea>
                 </div>
                 <?php if (!isset($_SESSION['LOGGED_USER'])) : ?>
                     <div class="alert alert-info">Vous devez vous connecter pour laisser le commentaire.</div>
                 <?php else : ?>
+                    <input type="hidden" value="<?= getLoggedUserInfo('userId') ?>" name="user_id">
                     <button type="submit" class="btn btn-dark">Commenter</button>
                 <?php endif; ?>
             </form>
         </div>
+        <?php endif; ?>
         <div id="comments">
             <?php
             if (count($comments) == 0) {
@@ -92,8 +94,16 @@ $comments = $CommentStatement->fetchAll(PDO::FETCH_ASSOC);
                                     <p class="card-text"><?= $content ?></p>
                                     <p class="card-text"><small class="text-body-secondary">Posté le <?= $date ?></small></p>
                                 </div>
+                               
                             </div>
                         </div>
+                        <?php if (isset($_SESSION['LOGGED_USER']) && $comment['user_id'] == getLoggedUserInfo('userId')) : ?>
+                            <div class="card-footer">
+                            <a href="comment_edit.php?id=<?= $comment_id ?>&recipe_id=<?= $recipe_id ?>" class="btn btn-success">Modifier</a>
+                            <a href="comment_delete.php?id=<?= $comment_id ?>&recipe_id=<?= $recipe_id ?>"  class="btn btn-danger">Supprimer</a>
+                        </div>
+                        <?php endif; ?>
+                        
                     </div>
             <?php endforeach;
             } ?>
@@ -103,6 +113,7 @@ $comments = $CommentStatement->fetchAll(PDO::FETCH_ASSOC);
     <div class="col-md-3">
         <h3 class="fw-bolder">Notes</h3>
         <hr>
+        <?php if (($recipe['user_id'] != getLoggedUserInfo('userId'))): ?>
         <div class="rating_actions">
             <form action="" method="get">
                 <div class="mb-3">
@@ -120,7 +131,8 @@ $comments = $CommentStatement->fetchAll(PDO::FETCH_ASSOC);
                 <?php endif; ?>
             </form>
         </div>
-        <div class="rating_stats mt-4 bg-light h-50 p-2">
+        <?php endif; ?>
+        <div class="rating_stats mt-4 bg-light p-2">
             <h4 class="fw-bolder">Stats</h4>
             <div>
                 <h6 className="text-app">Nombre personnes</h6>

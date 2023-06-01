@@ -29,11 +29,15 @@ $recipes = $recipesStatement->fetchAll(PDO::FETCH_ASSOC);
 <hr>
 <!-- Parcours et affichage des recettes -->
 <?php foreach ($recipes as $recipe) : ?>
+    
+    
+
     <article class="mb-3">
         <h3 class="fw-bolder"><a class="text-dark text-decoration-none" href="recipe.php?id=<?= $recipe['recipe_id'] ?>"><?php echo $recipe['title']; ?></a></h3>
         <div><?php echo $recipe['description']; ?></div>
-        <i><?php echo  $recipe['username']; ?></i>
+        <i>Auteur: <strong><?= ($recipe['user_id'] == getLoggedUserInfo('userId')) ? "Vous" : $recipe['username']  ?></strong></i>
     </article>
+   
 <?php endforeach ?>
 </div>
 <?php

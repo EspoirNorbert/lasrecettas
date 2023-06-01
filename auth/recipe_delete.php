@@ -5,6 +5,7 @@ require_once("../conn_db/conn.php");
 require_once("../inc/functions.php");
 
 $recipeId = $_GET["id"];
+$commentId = $_GET["id"];
 
 if (!isset($recipeId) && !is_numeric($recipeId)) {
     header("Location: index.php");
@@ -18,3 +19,5 @@ $insertRecipe->execute([
 
 $_SESSION["flash"]['success'] =  "La recette supprimé avec success !";
 header("location: recipes.php");
+
+

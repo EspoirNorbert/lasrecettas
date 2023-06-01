@@ -35,7 +35,13 @@ $CommentStatement->execute([
 ]);
 $comments = $CommentStatement->fetchAll(PDO::FETCH_ASSOC);
 ?>
-
+<div class="d-flex mt-3 mb-3">
+            <a href="recipe_edit.php?id=<?= $recipe_id ?>" class="btn btn-success me-2">Modifier</a>
+            <a 
+            onclick="return confirm('Voulez vous vraiment supprimer cette recette ?')"
+            
+            href="recipe_delete.php?id=<?= $recipe_id ?>"  class="btn btn-danger">Supprimer</a>
+        </div>
 <div class="row mb-5">
     <div class="col-md-9">
         <h3 class="fw-bolder"><?= count($comments) ?> Commentaire<?= count($comments) > 1 ? "s" : "" ?></h3>
