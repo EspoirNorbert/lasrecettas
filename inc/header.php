@@ -1,4 +1,4 @@
-<?php session_start();
+<?php
 require_once('functions.php')
 ?>
 <!DOCTYPE html>
@@ -10,7 +10,6 @@ require_once('functions.php')
   <title><?= $titlePage ?> - Site de Recettes</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-  <link rel="stylesheet" href="../css/index.css">
 </head>
 <body class="d-flex flex-column min-vh-100">
   <?php

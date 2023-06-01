@@ -1,4 +1,5 @@
 <?php
+session_start();
 $titlePage = "Se connecter";
 require_once('inc/header.php');
 

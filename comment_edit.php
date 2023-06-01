@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require_once("conn_db/conn.php");
 $titlePage = "Modification d'un commentaire";
 require_once('inc/header.php');

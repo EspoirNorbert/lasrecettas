@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once("conn_db/conn.php");
 
 $recipe_id = $_GET["id"];

@@ -3,6 +3,7 @@ session_start();
 
 require_once("../conn_db/conn.php");
 require_once("../inc/functions.php");
+block_access();
 
 $postData = $_POST;
 

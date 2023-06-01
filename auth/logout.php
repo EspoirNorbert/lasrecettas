@@ -3,6 +3,8 @@
 // Si vous utilisez un autre nom
 // session_name("autrenom")
 session_start();
+require_once("../inc/functions.php");
+block_access();
 
 // Détruit toutes les variables de session
 $_SESSION = array();

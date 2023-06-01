@@ -1,4 +1,5 @@
 <?php
+session_start();
 $titlePage = "Contactez Nous";
 require_once('inc/header.php');
 

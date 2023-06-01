@@ -3,6 +3,8 @@ session_start();
 
 require_once("../conn_db/conn.php");
 require_once("../inc/functions.php");
+block_access();
+
 
 $recipeId = $_GET["id"];
 $commentId = $_GET["id"];

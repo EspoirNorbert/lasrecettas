@@ -1,4 +1,8 @@
 <?php 
+session_start();
+require_once("../inc/functions.php");
+block_access();
+
 $titlePage="Tableau de bord";
 require_once('../inc/header.php');
 ?>

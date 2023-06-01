@@ -1,7 +1,6 @@
-<footer class="bg-light text-center text-lg-start mt-auto">
+<footer class="bg-dark text-center text-lg-start text-white mt-auto">
   <div class="text-center p-3">
-    © 2023 Copyright:
-    <a class="text-dark" href="https://megasoft-international.com/">Megasoft International Gabon</a>
+    Lasrecettas © 2023 Copyright All right is reserved
   </div>
 </footer>
 </body>
