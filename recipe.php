@@ -57,21 +57,21 @@ $comments = $CommentStatement->fetchAll(PDO::FETCH_ASSOC);
     <div class="col-md-9">
         <h3 class="fw-bolder"><?= count($comments) ?> Commentaire<?= count($comments) > 1 ? "s" : "" ?></h3>
         <hr>
-        <?php if (($recipe['user_id'] != getLoggedUserInfo('userId'))): ?>
-        <div id="postCommentForm" class="mb-3">
-            <form action="comment_create.php" method="POST">
-                <input type="hidden" value="<?= $recipe_id ?>" name="recipe_id">
-                <div class="mt-3 mb-3">
-                    <textarea class="form-control" id="comment" placeholder="Laisser un commentaire" name="comment"></textarea>
-                </div>
-                <?php if (!isset($_SESSION['LOGGED_USER'])) : ?>
-                    <div class="alert alert-info">Vous devez vous connecter pour laisser le commentaire.</div>
-                <?php else : ?>
-                    <input type="hidden" value="<?= getLoggedUserInfo('userId') ?>" name="user_id">
-                    <button type="submit" class="btn btn-dark">Commenter</button>
-                <?php endif; ?>
-            </form>
-        </div>
+        <?php if (($recipe['user_id'] != getLoggedUserInfo('userId'))) : ?>
+            <div id="postCommentForm" class="mb-3">
+                <form action="comment_create.php" method="POST">
+                    <input type="hidden" value="<?= $recipe_id ?>" name="recipe_id">
+                    <div class="mt-3 mb-3">
+                        <textarea class="form-control" id="comment" placeholder="Laisser un commentaire" name="comment"></textarea>
+                    </div>
+                    <?php if (!isset($_SESSION['LOGGED_USER'])) : ?>
+                        <div class="alert alert-info">Vous devez vous connecter pour laisser le commentaire.</div>
+                    <?php else : ?>
+                        <input type="hidden" value="<?= getLoggedUserInfo('userId') ?>" name="user_id">
+                        <button type="submit" class="btn btn-dark">Commenter</button>
+                    <?php endif; ?>
+                </form>
+            </div>
         <?php endif; ?>
         <div id="comments">
             <?php
@@ -94,16 +94,16 @@ $comments = $CommentStatement->fetchAll(PDO::FETCH_ASSOC);
                                     <p class="card-text"><?= $content ?></p>
                                     <p class="card-text"><small class="text-body-secondary">Posté le <?= $date ?></small></p>
                                 </div>
-                               
+
                             </div>
                         </div>
                         <?php if (isset($_SESSION['LOGGED_USER']) && $comment['user_id'] == getLoggedUserInfo('userId')) : ?>
                             <div class="card-footer">
-                            <a href="comment_edit.php?id=<?= $comment_id ?>&recipe_id=<?= $recipe_id ?>" class="btn btn-success">Modifier</a>
-                            <a href="comment_delete.php?id=<?= $comment_id ?>&recipe_id=<?= $recipe_id ?>"  class="btn btn-danger">Supprimer</a>
-                        </div>
+                                <a href="comment_edit.php?id=<?= $comment_id ?>&recipe_id=<?= $recipe_id ?>" class="btn btn-success">Modifier</a>
+                                <a href="comment_delete.php?id=<?= $comment_id ?>&recipe_id=<?= $recipe_id ?>" class="btn btn-danger">Supprimer</a>
+                            </div>
                         <?php endif; ?>
-                        
+
                     </div>
             <?php endforeach;
             } ?>
@@ -113,36 +113,68 @@ $comments = $CommentStatement->fetchAll(PDO::FETCH_ASSOC);
     <div class="col-md-3">
         <h3 class="fw-bolder">Notes</h3>
         <hr>
-        <?php if (($recipe['user_id'] != getLoggedUserInfo('userId'))): ?>
-        <div class="rating_actions">
-            <form action="" method="get">
-                <div class="mb-3">
-                    <select class="form-control" name="ratings" id="ratings">
-                        <option value="null">Selectionner la note</option>
+        <?php if (($recipe['user_id'] != getLoggedUserInfo('userId'))) : ?>
+            <div class="rating_actions">
+                <form action="rating_create.php" method="POST">
+                    <?php
+                    // recuperer la note de la recette de l'utilisateur
+                    if (isset($_SESSION['LOGGED_USER'])) {
+                        $userId = getLoggedUserInfo('userId');
+                        $sqlRating = 'SELECT rating FROM ratings where recipe_id = :recipe_id and user_id =:user_id';
+                        $ratingStatement = $db->prepare($sqlRating);
+                        $ratingStatement->execute([
+                            'recipe_id' => $recipe_id,
+                            'user_id' => $userId,
+                        ]);
+                        $resultRating  = $ratingStatement->fetch(PDO::FETCH_ASSOC);
+                        $rate = (gettype($resultRating) == "boolean") ? [] : $resultRating;
+                    }
+                    ?>
+                    <input type="hidden" value="<?= $recipe_id ?>" name="recipe_id">
+                    <div class="mb-3">
                         <?php for ($i = 0; $i <= 5; $i++) { ?>
-                            <option value="<?= $i ?>"><?= $i ?></option>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" class="form-check-input" <?php if ((isset($_SESSION['LOGGED_USER']) && !empty($rate)) && $rate['rating'] == $i) echo "checked"; ?> id="radio<?= $i ?>" name="rate" value="<?= $i ?>">
+                                <label class="form-check-label" for="radio1"><?= $i ?></label>
+                            </div>
                         <?php } ?>
-                    </select>
-                </div>
-                <?php if (!isset($_SESSION['LOGGED_USER'])) : ?>
-                    <div class="alert alert-info"><small>Connecter vous pour noter</small></div>
-                <?php else : ?>
-                    <button type="submit" class="btn btn-dark">Noter</button>
-                <?php endif; ?>
-            </form>
-        </div>
+                    </div>
+                    <?php if (!isset($_SESSION['LOGGED_USER'])) : ?>
+                        <div class="alert alert-info"><small>Connecter vous pour noter</small></div>
+                    <?php else : ?>
+                        <button type="submit" class="btn btn-dark">Noter</button>
+
+                    <?php endif; ?>
+                </form>
+            </div>
         <?php endif; ?>
         <div class="rating_stats mt-4 bg-light p-2">
             <h4 class="fw-bolder">Stats</h4>
             <div>
                 <h6 className="text-app">Nombre personnes</h6>
                 <hr>
-                <p><strong><?= 0 ?></strong></p>
+                <?php
+                $sqlTotalCount = 'SELECT count(DISTINCT user_id) as total_users FROM ratings where recipe_id = :recipe_id ';
+                $totalUserStatement = $db->prepare($sqlTotalCount);
+                $totalUserStatement->execute([
+                    'recipe_id' => $recipe_id
+                ]);
+                $resultTotalUser  = $totalUserStatement->fetch(PDO::FETCH_ASSOC);
+                ?>
+                <p><strong><?= $resultTotalUser['total_users'] ?></strong></p>
             </div>
             <div>
                 <h6 className="text-app">Moyenne</h6>
                 <hr>
-                <p><strong><?= 0.0 ?></strong></p>
+                <?php
+                $sqlAverage = 'SELECT AVG(rating) AS average_rating FROM ratings where recipe_id = :recipe_id ';
+                $averageStatement = $db->prepare($sqlAverage);
+                $averageStatement->execute([
+                    'recipe_id' => $recipe_id
+                ]);
+                $resultAverage   = $averageStatement->fetch(PDO::FETCH_ASSOC);
+                ?>
+                <p><strong><?= ($resultAverage['average_rating'] == NULL) ? 'NA' : round($resultAverage['average_rating'], 2) ?></strong></p>
             </div>
         </div>
     </div>

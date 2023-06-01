@@ -22,7 +22,7 @@
       </ul>
      <div class="navbar-nav ml-auto">
         <img width="30" src="../assets/images/user.png" class="me-3" alt="">
-        <span><?= getLoggedUserInfo("username") ?></span>
+        <span><?= getLoggedUserInfo("username") ?> <strong>#<?= getLoggedUserInfo("userId") ?></strong></span>
      </div>
     </div>
   </div>
