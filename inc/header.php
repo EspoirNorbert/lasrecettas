@@ -15,7 +15,7 @@ require_once('functions.php')
 <body class="d-flex flex-column min-vh-100">
   <?php
   if (isset($_SESSION['LOGGED_USER'])) {
-    include_once('nav_admin.php');
+    include_once('nav_auth.php');
   } else {
     include_once('nav.php');
   }
